@@ -60,3 +60,14 @@ nul
 .tmp/
 .vs/
 .vscode/
+
+# --- Bundled ReXGlue SDK (sdk/) -----------------------------------------------
+# sdk/ vendors the ReXGlue SDK (v0.10.0 + this port's Switch patches) so the
+# repository is self-contained. Its sources, headers, templates, resources and
+# third-party trees must all be tracked, even where the generic patterns above
+# (*.a, *.o, *.obj, *.elf, *.lst, *.map, *.log, *.err, out/, build/) would
+# otherwise match. Only SDK build output stays ignored.
+!sdk/**
+sdk/out/
+sdk/build/
+sdk/CMakeUserPresets.json

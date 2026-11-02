@@ -49,29 +49,31 @@ checklist.
 | `scripts/` | Build and data-preparation scripts |
 | `docs/` | Engineering documents (XEX/TU/DLC analysis, performance verification method) |
 | `tools/` | In-house helper tools (XEX analysis, TU/DLC unpack, delta patch) |
-| `sdk_changes/` | The SDK files this port patches (single-layer VFS mount, input mapping, profiling, T2 hook table) |
+| `sdk/` | Vendored ReXGlue SDK v0.10.0 — the Switch fork this port is built against (configure with `-DREXSDK_DIR=<repo root>/sdk`), with its Switch patches, sources and third-party trees, committed so the repository is self-contained |
+| `sdk_changes/` | Just the SDK files this port patches (single-layer VFS mount, input mapping, profiling, T2 hook table), for quick diffing against upstream |
 | `readme_zh.md` | Chinese README and the full per-round engineering log |
 
-The ReXGlue Switch fork itself (`repos/nfsmw-nx/`) and the ~7 GB of game data are **not** part of this
-repository: the fork is an external dependency cloned separately (section 3), and the game data is
-extracted from your own copy of the title (section 5). Everything else this port contributes — the
+The ReXGlue SDK this port is built against is **vendored in `sdk/`** (v0.10.0 plus the port's Switch
+patches), so the repository is self-contained apart from the ~7 GB of game data, which is extracted
+from your own copy of the title (section 5). Everything this port contributes — the vendored SDK, the
 recompiled codegen output, the application/hook source, the helper tools and the per-round reports —
-is committed here.
+is committed here. Only the SDK's build output (`sdk/out/`) is excluded.
 
 ## 3. Requirements
 
 * Windows (this project is built on Windows + Git Bash), or any environment that can run devkitPro
 * devkitPro + devkitA64 + libnx (`DEVKITPRO` environment variable set)
 * CMake ≥ 3.25, Ninja, Python 3
-* Dependency: `repos/nfsmw-nx/` — the Switch fork of `rexglue-sdk` including the Renut/deko3d
-  backend, the plume/uam dependencies and the T2 hook table. Clone it separately next to the project
-  root; it is **not** bundled in this repository (the SDK files this port patches are collected under
-  `sdk_changes/`)
+* Dependency: `sdk/` — the vendored Switch fork of `rexglue-sdk` (v0.10.0) including the Renut/deko3d
+  backend, the plume/uam dependencies and the T2 hook table. It is **committed in this repository**
+  and is the SDK the build actually uses (CMake looks up `REXSDK_DIR`, so configure with
+  `-DREXSDK_DIR=<repo root>/sdk`), so no separate clone is needed; only its build output (`sdk/out/`)
+  is excluded. `sdk_changes/` collects just the files this port patches.
 * The Mesa/NVK `repos/mesa-switch/` SDK is **no longer needed**: the deko3d build does not link the
   Vulkan driver (`PLUME_SWITCH_NO_NVK=ON`). `scripts/build_mesa_sdk.sh` is kept only as history of
   the NVK era.
 * `recomp/generated/` already contains the codegen output. Regenerating it requires the host-side
-  `repos/nfsmw-nx/sdk/out/win-amd64/rexglue.exe` and `recomp/codegen_t2rotf.sh`.
+  `sdk/out/win-amd64/rexglue.exe` and `recomp/codegen_t2rotf.sh`.
 
 ## 4. Installing on Switch
 
