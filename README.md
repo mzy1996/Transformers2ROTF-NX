@@ -64,11 +64,14 @@ is committed here. Only the SDK's build output (`sdk/out/`) is excluded.
 * Windows (this project is built on Windows + Git Bash), or any environment that can run devkitPro
 * devkitPro + devkitA64 + libnx (`DEVKITPRO` environment variable set)
 * CMake ≥ 3.25, Ninja, Python 3
-* Dependency: `sdk/` — the vendored Switch fork of `rexglue-sdk` (v0.10.0) including the Renut/deko3d
-  backend, the plume/uam dependencies and the T2 hook table. It is **committed in this repository**
+* Dependency: `sdk/` — the vendored Switch fork of `rexglue-sdk` (v0.10.0): the SDK base this port
+  builds against, carrying its Switch bring-up patches (Switch platform layer, single-layer VFS
+  mount, guest-memory shadowing, libnx thread/crash hooks). It is **committed in this repository**
   and is the SDK the build actually uses (CMake looks up `REXSDK_DIR`, so configure with
   `-DREXSDK_DIR=<repo root>/sdk`), so no separate clone is needed; only its build output (`sdk/out/`)
-  is excluded. `sdk_changes/` collects just the files this port patches.
+  is excluded. `sdk_changes/` collects just the files this port patches. The port's own graphics
+  pieces — Renut's renderer engine (`recomp/src/renut_engine/`), the plume/uam GPU libraries
+  (`recomp/thirdparty/`) and the T2 hook table — live under `recomp/`, not in `sdk/`.
 * The Mesa/NVK `repos/mesa-switch/` SDK is **no longer needed**: the deko3d build does not link the
   Vulkan driver (`PLUME_SWITCH_NO_NVK=ON`). `scripts/build_mesa_sdk.sh` is kept only as history of
   the NVK era.

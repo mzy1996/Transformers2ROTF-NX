@@ -111,7 +111,7 @@ sdmc:/switch/Transformers2ROTF/
 - Windows（本工程在 Windows + Git Bash 下构建），或任意能运行 devkitPro 的环境
 - devkitPro + devkitA64 + libnx（`DEVKITPRO` 环境变量有效）
 - CMake ≥ 3.25、Ninja、Python 3
-- 依赖：Switch 版 rexglue-sdk 基座（含 Renut/deko3d 后端、plume/uam 依赖与 T2 钩子表）。**本仓库已内置**：`sdk/`（v0.10.0，即构建实际使用的 SDK）；配置时用 `-DREXSDK_DIR=<工程根>/sdk`，无需另行 clone。仅 `sdk/out/`（SDK 构建产物）被排除。
+- 依赖：Switch 版 rexglue-sdk 基座 `sdk/`（v0.10.0，含本移植的 Switch 平台层补丁：Switch 平台层、单层 VFS 挂载、guest 内存影子化、libnx 线程/崩溃钩子）。**本仓库已内置**，即构建实际使用的 SDK；配置时用 `-DREXSDK_DIR=<工程根>/sdk`，无需另行 clone。仅 `sdk/out/`（SDK 构建产物）被排除。本移植自身的图形部件——Renut 渲染引擎（`recomp/src/renut_engine/`）、plume/uam GPU 库（`recomp/thirdparty/`）与 T2 钩子表——位于 `recomp/` 而非 `sdk/`。
   - **不再需要** `repos/mesa-switch/` 的 NVK Horizon SDK（deko3d 版构建不链接 Vulkan 驱动，`PLUME_SWITCH_NO_NVK=ON`）；`scripts/build_mesa_sdk.sh` 仅作 NVK 时代的历史保留
 - `recomp/generated/` 已含 codegen 输出（本次已生成，通常无需重跑；如要重跑需 host 端 `sdk/out/win-amd64/rexglue.exe` 与 `recomp/codegen_t2rotf.sh`）
 
