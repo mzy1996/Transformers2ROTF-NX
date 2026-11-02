@@ -1,0 +1,40 @@
+== archive -> callee references ==
+sub_82881848 1 ['sub_82881E00']
+sub_82881F58 0 []
+sub_82882628 1 ['sub_82A57278']
+sub_82882568 1 ['sub_82ABB7D0']
+sub_82881B88 1 ['sub_82881E00']
+sub_82881E00 5 ['sub_82881F00', 'sub_82882200', 'sub_82882740', 'sub_828828E0', 'sub_829976E8']
+sub_82881930 1 ['sub_82881B88']
+sub_82882200 2 ['sub_82880EF8', 'sub_82ABB7D0']
+sub_82ABB7D0 3 ['sub_82880978', 'sub_82AAC178', 'sub_82AE0F78']
+
+== per-address textual hits (first 40) ==
+--- sub_82881848
+    sub_82881E00 T2ROTF_recomp.21.cpp 94287
+--- sub_82881F58
+--- sub_82882628
+    sub_82A57278 T2ROTF_recomp.17.cpp 121124
+--- sub_82882568
+    sub_82ABB7D0 T2ROTF_recomp.29.cpp 122896
+--- sub_82881B88
+    sub_82881E00 T2ROTF_recomp.21.cpp 94179
+    sub_82881E00 T2ROTF_recomp.21.cpp 94271
+--- sub_82881E00
+    sub_829976E8 T2ROTF_recomp.31.cpp 111776
+    sub_82882740 T2ROTF_recomp.36.cpp 92692
+    sub_82882200 T2ROTF_recomp.39.cpp 92308
+    sub_828828E0 T2ROTF_recomp.41.cpp 93637
+    sub_82881F00 T2ROTF_recomp.46.cpp 97309
+--- sub_82881930
+    sub_82881B88 T2ROTF_recomp.4.cpp 94979
+    sub_82881B88 T2ROTF_recomp.4.cpp 95107
+--- sub_82882200
+    sub_82ABB7D0 T2ROTF_recomp.29.cpp 122777
+    sub_82880EF8 T2ROTF_recomp.39.cpp 92175
+--- sub_82ABB7D0
+    sub_82880978 T2ROTF_recomp.21.cpp 94113
+    sub_82AE0F78 T2ROTF_recomp.36.cpp 123913
+    sub_82AE0F78 T2ROTF_recomp.36.cpp 123980
+    sub_82AE0F78 T2ROTF_recomp.36.cpp 124047
+    sub_82AAC178 T2ROTF_recomp.38.cpp 123628

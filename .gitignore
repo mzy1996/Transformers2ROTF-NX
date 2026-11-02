@@ -1,0 +1,62 @@
+# T2ROTF — repository ignore rules
+#
+# Nothing derived from the game and no build output is committed.
+# The ~7 GB of game data (game/, update/, patched/, dlc/) and every build
+# directory (recomp/out/, build/, out/, app/) stay out of the repository.
+
+# --- Game data (never committed) ---------------------------------------------
+game/
+update/
+patched/
+DLC/
+dlc/
+assets/
+$SystemUpdate/
+extracted/
+refs/
+*.xex
+*.xexp
+*.iso
+*.vpk
+
+# --- Build output / intermediates --------------------------------------------
+build/
+out/
+app/
+recomp/out/
+recomp/generated/default.bak_thunks/
+recomp/generated/default_tu_bak/
+_pkg_v*/
+_tmp_pkg/
+*.nro
+*.nacp
+*.elf
+*.lst
+*.map
+*.o
+*.obj
+*.a
+*.log
+*.err
+t2rotf_nm.txt
+T2ROTF_switch_port.zip
+
+# --- Reference clones (study material, not part of this project) -------------
+repos/
+reference_repos/
+tools/xenia-canary/
+tools/win/
+__pycache__/
+*.pyc
+
+# --- Backups / scratch -------------------------------------------------------
+*.bak
+*.bak.*
+icon_T2_bak.png
+nul
+
+# --- Environment / editor ----------------------------------------------------
+.dumate/
+.tmp/
+.vs/
+.vscode/

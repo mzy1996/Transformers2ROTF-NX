@@ -1,0 +1,55 @@
+== J:/XBOX360 port/Transformers Revenge of the Fallen/default.xex  (14200832 bytes) ==
+module_flags=0x00000001 header_size=0x3000 security_offset=0x98 header_count=16
+  opt[00] RESOURCE_INFO              key=0x000002FF -> data@0x18CC
+  opt[01] FILE_FORMAT_INFO           key=0x000003FF -> data@0x18E0
+  opt[02] ENTRY_POINT                key=0x00010100 value=0x824F0E00
+  opt[03] IMAGE_BASE_ADDRESS         key=0x00010201 -> value@0x82000000 = 0x00000000
+  opt[04] IMPORT_LIBRARIES           key=0x000103FF -> data@0x27C8
+  opt[05] CHECKSUM_TIMESTAMP         key=0x00018002 -> data@0x1908
+  opt[06] ORIGINAL_PE_NAME           key=0x000183FF -> data@0x1910
+  opt[07] STATIC_LIBRARIES           key=0x000200FF -> data@0x192C
+  opt[08] TLS_INFO                   key=0x00020104 -> data@0x1A10
+  opt[09] DEFAULT_STACK_SIZE         key=0x00020200 value=0x00040000
+  opt[10] SYSTEM_FLAGS               key=0x00030000 value=0x00000600
+  opt[11] EXECUTION_INFO             key=0x00040006 -> data@0x1A20
+  opt[12] TITLE_WORKSPACE_SIZE       key=0x00040201 -> value@0x80000 = 0xFF0223B4
+  opt[13] GAME_RATINGS               key=0x00040310 -> data@0x1A38
+  opt[14] LAN_KEY                    key=0x00040404 -> data@0x1A78
+  opt[15] XBOX360_LOGO               key=0x000405FF -> data@0x1A88
+
+ExecutionInfo: title_id=0x41560834 media_id=0x338852BF version=0.0.0.1 base=0.0.0.1 platform=PC disc=1/1 savegame=0x00000000
+
+FileFormat: size=0x28 encryption=NORMAL compression=BASIC
+  decompressed size ~0xD88000 bytes
+
+SecurityInfo @ 0x98:
+  sec_size=0x1834 image_size=0xF20000 image_flags=0x00000008
+  load_address=0x82000000 import_table_count=2
+  xgd2_media_id=1aa05fa0955aed405b55b061338852bf
+  aes_key=c38cbeae4cc24f8e232ff2e4ba1884d5
+  export_table=0x82B3E384 region=0xFFFFFFFF allowed_media=0x00000004
+  page_descriptor_count=242
+  assumed page_size=0x10000 (64KB)
+    page[00] type=RODATA pages=1 (@0x82000000-0x8200FFFF)
+    page[01] type=RODATA pages=1 (@0x82010000-0x8201FFFF)
+    page[02] type=RODATA pages=1 (@0x82020000-0x8202FFFF)
+    page[03] type=RODATA pages=1 (@0x82030000-0x8203FFFF)
+    page[04] type=RODATA pages=1 (@0x82040000-0x8204FFFF)
+    page[05] type=RODATA pages=1 (@0x82050000-0x8205FFFF)
+    page[06] type=RODATA pages=1 (@0x82060000-0x8206FFFF)
+    page[07] type=RODATA pages=1 (@0x82070000-0x8207FFFF)
+    page[238] type=RODATA pages=1 (@0x82EE0000-0x82EEFFFF)
+    page[239] type=RODATA pages=1 (@0x82EF0000-0x82EFFFFF)
+    page[240] type=RODATA pages=1 (@0x82F00000-0x82F0FFFF)
+    page[241] type=RODATA pages=1 (@0x82F10000-0x82F1FFFF)
+  total pages=242 (0xF20000 bytes) code=166 data=48 rodata=28
+  section end check: base+image_size=0x82F20000
+
+ImportLibraries @0x27C8 total_size=0x838 string_table(count=2 size=0x18)
+  lib "xam.xex" id=0xFCA15C76 ver=2.0.7978.0 min=2.0.7371.0 imports=174
+  lib "xboxkrnl.exe" id=0x45DC17E0 ver=2.0.7978.0 min=2.0.7371.0 imports=323
+
+Resources @0x18CC count=1:
+    41560834ê addr=0x82EA0000 size=0x76069
+
+OriginalPEName: Transformers2_Final.exe

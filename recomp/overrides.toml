@@ -1,0 +1,98 @@
+# ============================================================================
+#  T2ROTF Recomp - manual declarations for the codegen
+#
+#  Included from T2ROTF_manifest.toml via includes = ["overrides.toml"].
+#  Included files use the flat schema (sections at the root), not the one
+#  nested under [entrypoint] in the manifest.
+# ============================================================================
+
+[functions]
+
+# ----------------------------------------------------------------------------
+#  FUNCTIONS DECLARED BY HAND
+#
+#  Key = start address (hex, in quotes).
+#  Fields, all optional:
+#    name             symbol name (default: sub_XXXXXXXX)
+#    size             size in bytes          \ mutually exclusive
+#    end              end address            /
+#    parent           address of the parent function (discontiguous fragment)
+#    share_registers  the fragment shares the parent's registers
+#
+#  Without size or end, the analyzer finds the bounds by itself from the
+#  address.
+# ----------------------------------------------------------------------------
+
+# --- codegen "UnresolvedCall ... target not in any function" fixes ---
+# Automatic discovery did not claim these addresses, but real PPC code starts
+# there and is branched into with direct b instructions:
+
+# 0x8233AB18 = li r3,0; blr (return-constant tail of a lookup/switch function)
+"0x8233AB18" = { }
+
+# 0x8231C004 = li r3,0; blr (same tail pattern)
+"0x8231C004" = { }
+
+# 0x8233AA00 = li r3,0; blr (same tail pattern)
+"0x8233AA00" = { }
+
+# 0x827299F8 = thunk-table entry (addi r3,r3,8; b ...).
+# Reached by b from 0x82729A04.
+"0x827299F8" = { }
+
+# 0x82742810 = tail fragment reached by b from 0x82732144 (cmpwi r4,0; ...).
+"0x82742810" = { }
+
+# --- TU (default.xexp) patch area: new branch targets after 0.0.1.1 ---
+# These appear only after applying the TU patch and were not claimed by
+# automatic discovery. Each is the destination of a direct b from patched
+# code and contains real PPC code.
+
+# 0x8272B778 = stwu r1,-0x80(r1) function prologue; b from 0x8272B784.
+"0x8272B778" = { }
+
+# 0x8231DDDC = lmw r31,-0x10(r1); blr (epilogue tail reused as branch target);
+# b from 0x8231DDEC.
+"0x8231DDDC" = { }
+
+# 0x8233C7E8 = lwz/... tail fragment; b from 0x8233C7F8.
+"0x8233C7E8" = { }
+
+# 0x8233C900 = li r6,1; ... tail fragment; b from 0x8233C910.
+"0x8233C900" = { }
+
+# 0x827446A0 = bne ... fragment (base 版 sub_827446A0 仍被补丁后分析器识别，
+# 但 0x82733F7C(补丁区) 直接跳入该地址，需显式声明以闭合跳转).
+"0x827446A0" = { }
+
+# --- 视频播放阶段暴露的间接调用目标（InvalidFunctionTrap）---
+# 与 nfsmw-nx 记录的 "8-byte gap / thunk table" 模式一致：这些地址只有
+# vtable/函数指针表数据引用，静态分析发现不了，游戏走到该路径才崩溃：
+#   [FATAL] Call to invalid or unregistered function at guest address 0x82737D70
+# （luxo_logo.wmv 播放阶段，最新 T2ROTF_001(32)/T2ROTF_002(17)）
+
+# 0x82737D70 = sub_82737D68 内部 +8 的跳转 thunk 中间地址
+#（sub_82737D68 = addi r3,r3,-32; b 0x82737918；0x82737D70 处的指令是
+#  b 0x82737918，被 C++ vtable 作为函数指针保存并间接调用）。
+"0x82737D70" = { }
+
+# 0x82733980 = thunk 表 gap（早期 T2ROTF_001(2).log 崩溃地址）。
+# 位于 0x827339xx 密集 thunk 表（addi r3,r3,±N; b ... 模式）中，
+# 0x82733988 与 0x82733958 之间未声明的入口。
+"0x82733980" = { }
+
+# --- v6.31 实机日志（T2ROTF_001(34)/T2ROTF_002(19)/rex_crash(32)）---
+# luxo_logo.wmv 读取后继续推进到未注册地址 0x8272EDF8：
+#   [FATAL] Call to invalid or unregistered function at guest address 0x8272EDF8
+# 该地址位于 sub_8272EDE0（8 字节，结束于 0x8272EDE8）之后、
+# sub_8272EE78（完整 prologue 函数）之前的独立 thunk 入口，同属
+# 0x8272EDxx 密集 thunk 表 gap，静态分析未发现。
+"0x8272EDF8" = { }
+
+# --- v6.29 实机日志（T2ROTF_001(33)/T2ROTF_002(18)/rex_crash(31)）---
+# luxo_logo.wmv 读取后再次调用未注册地址 0x82734308：
+#   [FATAL] Call to invalid or unregistered function at guest address 0x82734308
+# 该地址紧邻 sub_827342F0（6 条指令，结束于 0x82734308）之后、sub_82734320
+# （完整 prologue 函数）之前的独立 thunk 入口，与 0x82737D70 场景一致，
+# 仅有 vtable/函数指针表间接引用，静态分析未发现。由 codegen 直接反编译。
+"0x82734308" = { }
